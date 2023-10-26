@@ -18,11 +18,12 @@ type emp_type = {
 async function getData() {
     const postData = {
         method: "GET",
+        cache: "no-cache",
         headers:{
             "Content-Type": "application/json"
         }
     }
-    
+
     const res = await fetch('http://localhost:3000/emp_pool/api/',postData)
     if (!res.ok) {
         throw new Error('Failed to fetch data')

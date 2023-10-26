@@ -34,8 +34,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const pool = await mysql.createPool(mysqlaccess_pool);
   if (req.method === "POST") {
     const body = await req.json()
+
     const employee: Partial<emp_type> = {};
-    employee.id = Math.floor(Math.random() * 1001) + 300,
+    employee.id = Math.floor(Math.random() * 201) + 300
     employee.first_name = body.first_name
     employee.last_name = body.last_name
     employee.email = body.email
@@ -47,14 +48,27 @@ export async function POST(req: NextRequest, res: NextResponse) {
     employee.idmanager = 101
     employee.idjob = "IT_PROG"
 
+
+    const emp_data = [
+      employee.id,
+      employee.first_name,
+      employee.last_name,
+      employee.email,
+      employee.phone_number,
+      employee.hire_date,
+      employee.salary,
+      employee.commission_pct,
+      employee.iddepartment,
+      employee.idmanager,
+      employee.idjob
+    ]
     // const sql = 'insert into employees(`id`,`first_name`,`last_name`,`email`,`idjob`) values (?,?,?,?,?)'
     // const [rows, fields] = await pool.query(sql, [employee.id, employee.first_name, employee.last_name, employee.email, 'IT_PROG']);
     const sql = 'insert into employees values (?)'
-    const [rows, fields] = await pool.query(sql,[employee]);
-    console.log("=====Function POST=====")
-    console.log(employee)
-    console.log(sql)
-    console.log(typeof(employee))
+    const [rows, fields] = await pool.query(sql,[emp_data]);
+
+    // console.log(emp_data)
+    // console.log(rows)
     // res.status(200).json({ employees: rows})
     return NextResponse.json({ employees: rows });
   }
