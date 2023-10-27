@@ -1,21 +1,12 @@
+'use client'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { mysqlaccess } from '@/utils/db'
-
-import mysql, { ConnectionOptions } from 'mysql2';
-
-const conn = mysql.createConnection(mysqlaccess);
-
-conn.query('SELECT * from employees AS `test`;', (_err, rows) => {
-  // console.log(_err)
-  // console.log(rows)
-  /**
-   * @rows: [ { test: 2 } ]
-   */
-});
+import { Toaster } from "@/components/ui/toaster"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Home() {
+  const { toast } = useToast()
   return (
     <main>
       <Image src="/erd.png" width={600} height={200} alt='ERD' />
@@ -27,6 +18,17 @@ export default function Home() {
         <Button variant="ghost">Submit</Button>
         <Badge variant="secondary"> Badge Secondary</Badge>
       </div>
+      <Button
+                variant="outline"
+                onClick={() => {
+                    toast({
+                        title: "Scheduled: Catch up ",
+                        description: "Friday, February 10, 2023 at 5:57 PM",
+                    })
+                }}
+            >
+                Add to calendar
+            </Button>
     </main>
   )
 }

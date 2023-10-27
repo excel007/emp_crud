@@ -15,6 +15,7 @@ type emp_type = {
   iddepartment: number
   idmanager: number,
   idjob: string,
+  image: string,
 }
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -47,6 +48,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     employee.iddepartment = 80
     employee.idmanager = 101
     employee.idjob = "IT_PROG"
+    employee.image = "user.svg"
 
 
     const emp_data = [
@@ -60,7 +62,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
       employee.commission_pct,
       employee.iddepartment,
       employee.idmanager,
-      employee.idjob
+      employee.idjob,
+      employee.image
+
     ]
     // const sql = 'insert into employees(`id`,`first_name`,`last_name`,`email`,`idjob`) values (?,?,?,?,?)'
     // const [rows, fields] = await pool.query(sql, [employee.id, employee.first_name, employee.last_name, employee.email, 'IT_PROG']);

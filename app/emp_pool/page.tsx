@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { UserPlus,Pencil,Eraser  } from "lucide-react"
+import { RocketIcon } from "lucide-react"
 
 type emp_type = {
     id: number,
@@ -15,10 +16,12 @@ type emp_type = {
     idmanager: number,
     idjob: string,
 }
+
 async function getData() {
-    const postData = {
+    const postData : RequestInit = {
         method: "GET",
         cache: "no-cache",
+        next: { revalidate: 10 } ,
         headers:{
             "Content-Type": "application/json"
         }
@@ -37,7 +40,7 @@ export default async function Page() {
     return (
         <div>
             <h1>Employee list</h1>
-            
+          
             <Link href="emp_pool/create" className="flex"> <UserPlus /> Create Emp</Link>
             
             <ul className="list-disc list-inside">

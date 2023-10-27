@@ -4,8 +4,11 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 
-export default async function Page() {
+import { useToast } from "@/components/ui/use-toast"
+
+export default async function Create() {
     const router = useRouter()
+    const { toast } = useToast()
 
     const handleSubmit = async (event: any) => {
         event.preventDefault()
@@ -19,23 +22,33 @@ export default async function Page() {
         const postData = {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
         }
 
         const res = await fetch('/emp_pool/api/', postData)
-        const result = await res.json()
-        console.log(result.employees.affectedRows)
-        console.log(res)
-        if (res.statusText === 'OK') {
+        // const result = await res.json()
+        // console.log(result.employees.affectedRows)
+        // console.log(res)
+        if (res.ok) {
+            toast({
+                title: "Scheduled: Catch up",
+                description: "Friday, February 10, 2023 at 5:57 PM",
+              })
             router.push('/emp_pool');
 
+      
         }
     }
+
     return (
+
         <div>
             <h1>Create Employee</h1>
+
+
+
             <form onSubmit={handleSubmit}>
                 <Label htmlFor="first_name">First Name</Label>
                 <Input type="text" name="first_name" id="first_name" placeholder="First Name" className="lg:w-1/4 sm:w-full" />
