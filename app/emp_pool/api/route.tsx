@@ -34,7 +34,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 export async function POST(req: NextRequest, res: NextResponse) {
   const pool = await mysql.createPool(mysqlaccess_pool);
   if (req.method === "POST") {
-    const body = await req.json()
+    const body:emp_type = await req.json()
 
     const employee: Partial<emp_type> = {};
     employee.id = Math.floor(Math.random() * 201) + 300
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     employee.iddepartment = 80
     employee.idmanager = 101
     employee.idjob = "IT_PROG"
-    employee.image = "bruno.png"
+    employee.image = body.image
 
 
     const emp_data = [
@@ -66,6 +66,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       employee.image
 
     ]
+    console.log(emp_data)
     // const sql = 'insert into employees(`id`,`first_name`,`last_name`,`email`,`idjob`) values (?,?,?,?,?)'
     // const [rows, fields] = await pool.query(sql, [employee.id, employee.first_name, employee.last_name, employee.email, 'IT_PROG']);
     const sql = 'insert into employees values (?)'

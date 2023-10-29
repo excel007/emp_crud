@@ -39,7 +39,7 @@ export default async function Create() {
             //     description: event.target.first_name.value + " " + event.target.last_name.value + " inserted.",
             //   })
 
-            toast.success('บันทึกเรียบร้อย');  
+            toast.success('บันทึกเรียบร้อย');
             router.push('/emp_pool');
             router.refresh();
         }
@@ -59,7 +59,8 @@ export default async function Create() {
                 <Input type="text" name="last_name" id="last_name" placeholder="Last Name" className="lg:w-1/4 sm:w-full" />
                 <Label htmlFor="email">E-Mail</Label>
                 <Input type="text" name="email" id="email" placeholder="nam@mail.com" className="lg:w-1/4 sm:w-full" />
-
+                <Label htmlFor="image">Profile Image</Label>
+                <Input type='file' name="image" id='image' />
                 <Button> Submit </Button>
             </form>
         </div>
