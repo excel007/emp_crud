@@ -4,11 +4,12 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 
-import { useToast } from "@/components/ui/use-toast"
+// import { useToast } from "@/components/ui/use-toast"
+import toast, { Toaster } from 'react-hot-toast';
 
 export default async function Create() {
     const router = useRouter()
-    const { toast } = useToast()
+    // const { toast } = useToast()
 
     const handleSubmit = async (event: any) => {
         event.preventDefault()
@@ -32,13 +33,15 @@ export default async function Create() {
         // console.log(result.employees.affectedRows)
         // console.log(res)
         if (res.ok) {
-            toast({
-                title: "Scheduled: Catch up",
-                description: "Friday, February 10, 2023 at 5:57 PM",
-              })
-            router.push('/emp_pool');
+            // toast({
+            //     duration:2000,
+            //     title: "Message",
+            //     description: event.target.first_name.value + " " + event.target.last_name.value + " inserted.",
+            //   })
 
-      
+            toast.success('บันทึกเรียบร้อย');  
+            router.push('/emp_pool');
+            router.refresh();
         }
     }
 

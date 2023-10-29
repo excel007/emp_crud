@@ -1,4 +1,6 @@
 import Image from "next/image"
+import Link from "next/link"
+import { Router } from "next/router"
 
 type emp_type = {
     id: number,
@@ -12,6 +14,7 @@ type emp_type = {
     iddepartment: number
     idmanager: number,
     idjob: string,
+    image: string,
 }
 async function getData(id: any) {
     const res = await fetch(`http://localhost:3000/emp_pool/${id}/api`)
@@ -23,14 +26,18 @@ async function getData(id: any) {
 
 export default async function page({ params }: any) {
     const data = await getData(params.id)
+    // console.log(data)
+
     return (
         <div>
-            {data.map((emp: emp_type) => (
-            <div>
-                <Image src='/user.png' width={50} height={50} alt="{emp.first_name}"/>
-                {emp.first_name} {emp.last_name}
+            {data.employee.map((emp: emp_type) => (
+                <div key={emp.id} >
+                    <Image src={`/${emp.image}`} width={50} height={50} alt={emp.first_name} />
+                    {emp.first_name} {emp.last_name}
                 </div>
             ))}
+            <Link href="/emp_pool"> back </Link>
         </div>
+
     )
 }

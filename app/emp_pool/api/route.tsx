@@ -48,7 +48,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     employee.iddepartment = 80
     employee.idmanager = 101
     employee.idjob = "IT_PROG"
-    employee.image = "user.svg"
+    employee.image = "bruno.png"
 
 
     const emp_data = [

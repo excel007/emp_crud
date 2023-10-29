@@ -20,8 +20,8 @@ type emp_type = {
 async function getData() {
     const postData : RequestInit = {
         method: "GET",
-        cache: "no-cache",
-        next: { revalidate: 10 } ,
+        // cache: "no-cache",
+        next: { revalidate: 0 } ,
         headers:{
             "Content-Type": "application/json"
         }
