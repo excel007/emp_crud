@@ -2,6 +2,10 @@ import { writeFile } from 'fs/promises'
 import { NextRequest, NextResponse } from 'next/server'
 
 //create a random ID
+//https://www.codemzy.com/blog/random-unique-id-javascript
+// randomId(); // 'q9anz4'
+// randomId(2); // '5b'
+// randomId(10); // '68xclia3s8'
 const randomId = function (length = 6) {
   return Math.random().toString(36).substring(2, length + 2);
 };
@@ -18,7 +22,8 @@ export async function POST(request: NextRequest) {
   const buffer = Buffer.from(bytes)
 
   // generate a new filename
-  const mime = require('mime-types')
+  // https://www.npmjs.com/package/mime-types
+  const mime = require('mime-types') 
   const extension = mime.extension(mime.lookup(file.name))
   const newfilename = randomId(10) + '.' + extension
 
