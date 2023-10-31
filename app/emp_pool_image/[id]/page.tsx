@@ -17,7 +17,14 @@ type emp_type = {
     image: string,
 }
 async function getData(id: any) {
-    const res = await fetch(`http://localhost:3000/emp_pool/${id}/api`)
+    const postData: RequestInit = {
+        method: "GET",
+        next: { revalidate: 0 },
+        headers:{
+            "Content-Type":"application/json"
+        }
+    }
+    const res = await fetch(`http://localhost:3000/emp_pool_image/${id}/api`, postData)
     if (!res.ok) {
         throw new Error('Failed to fetch data')
     }
@@ -32,11 +39,12 @@ export default async function page({ params }: any) {
         <div>
             {data.employee.map((emp: emp_type) => (
                 <div key={emp.id} >
-                    <Image src={`/${emp.image}`} width={50} height={50} alt={emp.first_name} />
+                    <Image src={`/${emp.image}`} width={200} height={200} alt={emp.first_name} />
                     {emp.first_name} {emp.last_name}
                 </div>
             ))}
-            <Link href="/emp_pool"> back </Link>
+
+            <Link href="/emp_pool_image"> back </Link>
         </div>
 
     )

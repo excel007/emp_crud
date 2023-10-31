@@ -82,3 +82,35 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ employees: rows });
   }
 }
+
+export async function PUT(req: NextRequest, res: NextResponse) {
+  const pool = await mysql.createPool(mysqlaccess_pool);
+  if (req.method === "PUT") {
+    const data = await req.formData()
+
+    console.log(data)
+
+    // const fname = data.get('first_name')
+    const employee: emp_type = {
+      id: data.get('id') as number,
+      first_name: data.get('first_name') as string,
+      last_name: data.get('last_name') as string,
+      email: data.get('email') as string,
+      phone_number: "650.501.2876",
+      hire_date: "1998-07-01",
+      salary: 9999,
+      commission_pct: 0,
+      iddepartment: 80,
+      idmanager: 101,
+      idjob: "IT_PROG",
+      image: 'user.png'
+    }
+
+    // const sql = 'insert into employees(`id`,`first_name`,`last_name`,`email`,`idjob`) values (?,?,?,?,?)'
+    // const [rows, fields] = await pool.query(sql, [employee.id, employee.first_name, employee.last_name, employee.email, 'IT_PROG']);
+    const sql = 'update employees set ? where id = ?'
+    const [rows, fields] = await pool.query(sql, [employee,employee.id]);
+    console.log(rows)
+    return NextResponse.json({ employees: rows });
+  }
+}
