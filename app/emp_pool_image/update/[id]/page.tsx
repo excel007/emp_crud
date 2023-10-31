@@ -12,10 +12,12 @@ import { Button } from "@/components/ui/button"
 
 // import { useToast } from "@/components/ui/use-toast"
 import toast, { Toaster } from 'react-hot-toast';
+import Image from 'next/image'
 
 export default function Update() {
     const [first_name, setFname] = useState('')
     const [last_name, setLname] = useState('')
+    const [image, setImage] = useState('')
 
     const { id } = useParams();
 
@@ -26,6 +28,7 @@ export default function Update() {
                 (result) => {
                     setFname(result.employee[0].first_name)
                     setLname(result.employee[0].last_name)
+                    setImage(result.employee[0].image)
                 }
             )
     }, [id])
@@ -72,6 +75,7 @@ export default function Update() {
                 <Label htmlFor="email">E-Mail</Label>
                 <Input type="text" name="email" id="email" placeholder="nam@mail.com" className="lg:w-1/4 sm:w-full" />
                 <Label htmlFor="file">Profile Image</Label>
+                <Image src={`/${image}`} width={50} height={50} alt='user' />
                 <Input type='file' name="file" id='file' onChange={(e) => setFile(e.target.files?.[0])} />
                 <Input type='hidden' name='id' id='id' value={id}></Input>
                 <Button> Submit </Button>
