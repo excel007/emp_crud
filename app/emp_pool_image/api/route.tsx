@@ -17,7 +17,7 @@ type emp_type = {
   hire_date: string,
   salary: number,
   commission_pct: number,
-  iddepartment: number
+  iddepartment: number,
   idmanager: number,
   idjob: string,
   image: string,
@@ -38,13 +38,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const pool = await mysql.createPool(mysqlaccess_pool);
-  console.log('11111111111111')
+
   if (req.method === "POST") {
-    console.log('22222222222')
-
     const data = await req.formData()
-
-    console.log(data)
 
     const file: File | null = data.get('file') as unknown as File
     const bytes = await file.arrayBuffer()
@@ -89,7 +85,25 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     const data = await req.formData()
 
     console.log(data)
+    console.log(data.get('file'))
+    let newfilename = data.get('oldfilename') as string //for keep old image name
+    const file: File | null = data.get('file') as unknown as File
+    if (!(file.name === 'undefined')) { //if user do want to change image
+      const bytes = await file.arrayBuffer()
+      const buffer = Buffer.from(bytes)
 
+      const mime = require('mime-types')
+
+      if (mime.lookup(file.name) === 'image/jpeg' || mime.lookup(file.name) === 'image/png') {
+        const extension = mime.extension(mime.lookup(file.name))
+        newfilename = randomId(10) + '.' + extension
+        const path = `public/${newfilename}`
+        await writeFile(path, buffer)
+        console.log(`open ${path} to see the uploaded file`)
+      }else{
+        return NextResponse.json({ error: 'eee' }, { status: 500 , statusText:'please upload image jpeg | png only!!!'});
+      }
+    }
     // const fname = data.get('first_name')
     const employee: emp_type = {
       id: data.get('id') as number,
@@ -103,13 +117,13 @@ export async function PUT(req: NextRequest, res: NextResponse) {
       iddepartment: 80,
       idmanager: 101,
       idjob: "IT_PROG",
-      image: 'user.png'
+      image: newfilename,
     }
 
     // const sql = 'insert into employees(`id`,`first_name`,`last_name`,`email`,`idjob`) values (?,?,?,?,?)'
     // const [rows, fields] = await pool.query(sql, [employee.id, employee.first_name, employee.last_name, employee.email, 'IT_PROG']);
     const sql = 'update employees set ? where id = ?'
-    const [rows, fields] = await pool.query(sql, [employee,employee.id]);
+    const [rows, fields] = await pool.query(sql, [employee, employee.id]);
     console.log(rows)
     return NextResponse.json({ employees: rows });
   }

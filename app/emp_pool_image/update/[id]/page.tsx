@@ -79,6 +79,7 @@ export default function Update() {
         // }
 
         const data = new FormData(event.currentTarget)
+        // console.log(file)
         // data.set('file', file)
 
         const postData = {
@@ -92,6 +93,8 @@ export default function Update() {
             toast.success('บันทึกเรียบร้อย');
             router.push('/emp_pool_image');
             router.refresh();
+        } else {
+            toast.error(res.statusText)
         }
     }
 
@@ -99,8 +102,6 @@ export default function Update() {
 
         <div>
             <h1>Update Employee</h1>
-
-
 
             <form onSubmit={handleSubmit}>
                 <Label htmlFor="first_name">First Name</Label>
@@ -111,9 +112,11 @@ export default function Update() {
                 <Input type="text" name="email" id="email" placeholder="nam@mail.com" defaultValue={user.email} onChange={handleChange} className="lg:w-1/4 sm:w-full" />
                 <Label htmlFor="file">Profile Image</Label>
                 <Image src={`/${user.image}`} width={50} height={50} alt='user' />
-                <Input type='file' name="file" id='file' onChange={(e) => setFile(e.target.files?.[0])} />
-                <Input type='hidden' name='id' id='id' value={id}></Input>
-                <Button> Submit </Button>
+                <Input type='file' name="file" id='file' defaultValue={user.image} onChange={(e) => setFile(e.target.files?.[0])} />
+                <Input type='hidden' name='oldfilename' id='oldfilename' value={user.image} />
+                <Input type='hidden' name='id' id='id' value={id} />
+                <Button type='submit'> Submit </Button>
+                <Button type='button' onClick={(e) => router.back()}> Back </Button>
             </form>
         </div>
     )

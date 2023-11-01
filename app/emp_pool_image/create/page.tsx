@@ -56,7 +56,8 @@ export default function Create() {
                 <Input type="text" name="email" id="email" placeholder="nam@mail.com" className="lg:w-1/4 sm:w-full" />
                 <Label htmlFor="file">Profile Image</Label>
                 <Input type='file' name="file" id='file' onChange={(e) => setFile(e.target.files?.[0])} />
-                <Button> Submit </Button>
+                <Button type='submit'> Submit </Button>
+                <Button type='button' onClick={(e) => router.back()}> Back </Button>
             </form>
         </div>
     )
